@@ -10,7 +10,13 @@ client.on('ready', () => {
 client.on('message', msg => {
   if (msg.content.startsWith(cmdPrefix)) {
     const [cmd, ...args] = msg.content.trim().substring(cmdPrefix.length).split(/\s+/);
-    msg.reply(`The command: '${cmd}' was received.`);
+    // msg.reply(`The command: '${cmd}' was received.`);
+
+    if (cmd === 'echo') {
+      const a = `${args}`.replace(/,/g, ' ');
+      console.log('test:', a)
+      msg.reply(a);
+    }
   }
 });
 
