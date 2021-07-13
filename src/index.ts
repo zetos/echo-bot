@@ -1,20 +1,25 @@
-require('dotenv').config();
-const Discord = require('discord.js');
+import dotenvSafe from 'dotenv-safe';
+import Discord from 'discord.js';
+dotenvSafe.config();
+
 const client = new Discord.Client();
 const cmdPrefix = '!';
 
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+  console.log(`Logged in as ${client.user!.tag}!`);
 });
 
-client.on('message', msg => {
+client.on('message', (msg) => {
   if (msg.content.startsWith(cmdPrefix)) {
-    const [cmd, ...args] = msg.content.trim().substring(cmdPrefix.length).split(/\s+/);
+    const [cmd, ...args] = msg.content
+      .trim()
+      .substring(cmdPrefix.length)
+      .split(/\s+/);
     // msg.reply(`The command: '${cmd}' was received.`);
 
     if (cmd === 'echo') {
       const a = `${args}`.replace(/,/g, ' ');
-      console.log('test:', a)
+      console.log('test:', a);
       msg.reply(a);
     }
   }
