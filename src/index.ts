@@ -2,11 +2,13 @@ import dotenvSafe from 'dotenv-safe';
 import Discord from 'discord.js';
 dotenvSafe.config();
 
-const client = new Discord.Client();
+const client = new Discord.Client({
+  partials: ['MESSAGE', 'REACTION'],
+});
 const cmdPrefix = '!';
 
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user!.tag}!`);
+  console.info(`Logged as ${client.user!.tag}!`);
 });
 
 client.on('message', (msg) => {
@@ -18,9 +20,29 @@ client.on('message', (msg) => {
     // msg.reply(`The command: '${cmd}' was received.`);
 
     if (cmd === 'echo') {
-      const a = `${args}`.replace(/,/g, ' ');
-      console.log('test:', a);
+      const a = args.join(' ');
       msg.reply(a);
+    }
+  }
+});
+
+client.on('messageReactionAdd', (reaction, _user) => {
+  const { name } = reaction.emoji;
+  //const member = reaction.message.guild?.members.cache.get(user.id);
+  console.log('message id:', reaction.message.id);
+
+  if (reaction.message.id === '864950154129440808') {
+    switch (name) {
+      case '🍎':
+        //member?.roles.add('role_id');
+        reaction.message.reply('Apple test.');
+        break;
+      case '👹':
+        break;
+      case '👺':
+        break;
+      case '👾':
+        break;
     }
   }
 });
