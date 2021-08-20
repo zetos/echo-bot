@@ -16,7 +16,8 @@
   "license": "MIT",
   "dependencies": {
     "discord.js": "^12.5.3",
-    "dotenv-safe": "^8.2.0"
+    "dotenv-safe": "^8.2.0",
+    "rxjs": "^7.3.0"
   },
   "devDependencies": {
     "@types/dotenv-safe": "^8.1.2",
