@@ -1,7 +1,7 @@
 import dotenvSafe from 'dotenv-safe';
 import Discord from 'discord.js';
-import { fromEvent, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { fromEvent, Observable, throwError } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 
 dotenvSafe.config();
 
@@ -19,22 +19,27 @@ const messageEvent = fromEvent(client, 'message');
 
 readyEvent.subscribe(() => console.info(`Logged as ${client.user!.tag}!`));
 
+const isDiscordMessage = (foo: unknown): foo is Discord.Message =>
+  (foo as Discord.Message).content ? true : false;
+
 const test = messageEvent.pipe(
   map((msg) => {
-    const discordMsg = msg as Discord.Message;
-    if (discordMsg.content.startsWith(cmdPrefix)) {
-      const [cmd, ...args] = discordMsg.content
-        .trim()
-        .substring(cmdPrefix.length)
-        .split(/\s+/);
-      // discordMsg.reply(`The command: '${cmd}' was received.`);
+    if (isDiscordMessage(msg)) {
+      if (msg.content.startsWith(cmdPrefix)) {
+        const [cmd, ...args] = msg.content
+          .trim()
+          .substring(cmdPrefix.length)
+          .split(/\s+/);
 
-      if (cmd === 'echo') {
-        const a = args.join(' ');
-        discordMsg.reply(a);
+        if (cmd === 'echo') {
+          const a = args.join(' ');
+          msg.reply(a);
+        }
       }
+      // return msg;
+    } else {
+      throwError(() => new Error('Unexpected type Error'));
     }
-    return 'Done..';
   })
 );
 
