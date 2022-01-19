@@ -17,7 +17,7 @@ client.once('ready', () => {
   console.info(`Logged as ${client.user!.tag}!`);
 });
 
-client.on('message', (msg) => {
+client.on('messageCreate', (msg) => {
   if (msg.content.startsWith(cmdPrefix)) {
     const [cmd, ...args] = msg.content
       .trim()
@@ -27,8 +27,8 @@ client.on('message', (msg) => {
     // msg.reply(`The command: '${cmd}' was received.`);
 
     if (cmd === 'echo') {
-      const a = args.join(' ');
-      msg.reply(a);
+      const echoRes = args.join(' ');
+      msg.reply({ content: echoRes });
     }
   }
 });
