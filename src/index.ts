@@ -1,13 +1,19 @@
 import dotenvSafe from 'dotenv-safe';
-import Discord from 'discord.js';
+import { Client, Intents } from 'discord.js';
+
 dotenvSafe.config();
 
-const client = new Discord.Client({
+const client = new Client({
+  intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+  ],
   partials: ['MESSAGE', 'REACTION'],
 });
 const cmdPrefix = '!';
 
-client.on('ready', () => {
+client.once('ready', () => {
   console.info(`Logged as ${client.user!.tag}!`);
 });
 
@@ -17,6 +23,7 @@ client.on('message', (msg) => {
       .trim()
       .substring(cmdPrefix.length)
       .split(/\s+/);
+
     // msg.reply(`The command: '${cmd}' was received.`);
 
     if (cmd === 'echo') {
@@ -34,7 +41,6 @@ client.on('messageReactionAdd', (reaction, _user) => {
   if (reaction.message.id === '864950154129440808') {
     switch (name) {
       case '🍎':
-        //member?.roles.add('role_id');
         reaction.message.reply('Apple test.');
         break;
       case '👹':
