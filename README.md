@@ -1,5 +1,5 @@
 
-![echo](https://www.greek-gods.info/ancient-greek-gods/nymphs/images/echo.jpg)
+![echo](./media/echo.jpg)
 
 ---
 
