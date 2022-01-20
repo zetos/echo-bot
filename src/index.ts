@@ -10,7 +10,7 @@ const client = new Client({
 
 client.once('ready', () => {
   console.info(`Logged as ${client.user!.tag}!`);
-  const guildId = '470428002493399053';
+  const guildId = process.env.GUILD_ID!; // Remove it to register globally.
   const guild = client.guilds.cache.get(guildId);
   const commands = guild ? guild.commands : client.application?.commands;
 
