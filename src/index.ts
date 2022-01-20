@@ -1,22 +1,61 @@
 import dotenvSafe from 'dotenv-safe';
-import { Client, Intents } from 'discord.js';
+import { Client, Constants, Intents } from 'discord.js';
 
 dotenvSafe.config();
 
 const client = new Client({
-  intents: [
-    Intents.FLAGS.GUILDS,
-    Intents.FLAGS.GUILD_MESSAGES,
-    Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-  ],
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
   partials: ['MESSAGE', 'REACTION'],
 });
-const cmdPrefix = '!';
 
 client.once('ready', () => {
   console.info(`Logged as ${client.user!.tag}!`);
+  const guildId = '470428002493399053';
+  const guild = client.guilds.cache.get(guildId);
+  const commands = guild ? guild.commands : client.application?.commands;
+
+  commands?.create({
+    name: 'ping',
+    description: 'Replies with ping..',
+  });
+
+  commands?.create({
+    name: 'echo',
+    description: 'Repeats the last word.',
+    options: [
+      {
+        name: 'words',
+        description: 'A simple phrase.',
+        required: true,
+        type: Constants.ApplicationCommandOptionTypes.STRING,
+      },
+    ],
+  });
 });
 
+client.on('interactionCreate', async (interaction) => {
+  if (!interaction.isCommand()) {
+    return;
+  }
+
+  const { commandName, options } = interaction;
+
+  if (commandName === 'ping') {
+    interaction.reply({
+      content: 'ping..',
+      ephemeral: true,
+    });
+  } else if (commandName === 'echo') {
+    const words = options.getString('words')!;
+    const wordsArr = words.split(' ');
+
+    interaction.reply({
+      content: `${wordsArr[wordsArr.length - 1]}..`,
+    });
+  }
+});
+
+const cmdPrefix = '!';
 client.on('messageCreate', (msg) => {
   if (msg.content.startsWith(cmdPrefix)) {
     const [cmd, ...args] = msg.content
@@ -24,31 +63,9 @@ client.on('messageCreate', (msg) => {
       .substring(cmdPrefix.length)
       .split(/\s+/);
 
-    // msg.reply(`The command: '${cmd}' was received.`);
-
     if (cmd === 'echo') {
-      const echoRes = args.join(' ');
+      const echoRes = `${args[args.length - 1]}..`;
       msg.reply({ content: echoRes });
-    }
-  }
-});
-
-client.on('messageReactionAdd', (reaction, _user) => {
-  const { name } = reaction.emoji;
-  //const member = reaction.message.guild?.members.cache.get(user.id);
-  console.log('message id:', reaction.message.id);
-
-  if (reaction.message.id === '864950154129440808') {
-    switch (name) {
-      case '🍎':
-        reaction.message.reply('Apple test.');
-        break;
-      case '👹':
-        break;
-      case '👺':
-        break;
-      case '👾':
-        break;
     }
   }
 });
