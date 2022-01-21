@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn src/index.ts",
-    "build": "tsc --build tsconfig.json"
+    "build": "tsc --build tsconfig.json",
+    "deployCmds": "ts-node src/deploy-commands.ts"
   },
   "keywords": [
     "discord",
@@ -16,6 +17,9 @@
   "author": "Zetos Lima",
   "license": "MIT",
   "dependencies": {
+    "@discordjs/builders": "^0.11.0",
+    "@discordjs/rest": "^0.2.0-canary.0",
+    "discord-api-types": "^0.26.1",
     "discord.js": "^13.6.0",
     "dotenv-safe": "^8.2.0"
   },
