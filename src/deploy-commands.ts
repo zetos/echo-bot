@@ -1,23 +1,14 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { commandList } from './commands';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import dotenvSafe from 'dotenv-safe';
 dotenvSafe.config();
 
-const commands = [
-  new SlashCommandBuilder()
-    .setName('ping')
-    .setDescription('Replies with ping..'),
-  new SlashCommandBuilder()
-    .setName('beep')
-    .setDescription('Replies with beep..'),
-  new SlashCommandBuilder()
-    .setName('echo')
-    .setDescription('Repeats the last word.')
-    .addStringOption((option) =>
-      option.setName('phrase').setDescription('A phrase..').setRequired(true)
-    ),
-].map((command) => command.toJSON());
+const commands = [];
+
+for (const command of commandList) {
+  commands.push(command.data.toJSON());
+}
 
 const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN!);
 

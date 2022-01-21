@@ -9,7 +9,6 @@
 
 A list of avaliable different commands that have a similar result..
 
-- `!echo <phase>`: Answers with the last word..
 - `/echo <phase>`: Answers with the last word..
 - `/ping`: Answers with ping..
 ## Setup
