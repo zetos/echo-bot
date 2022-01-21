@@ -1,5 +1,6 @@
 import dotenvSafe from 'dotenv-safe';
-import { Client, Intents } from 'discord.js';
+import { Client, Collection, Intents, Interaction } from 'discord.js';
+import { commandList } from './commands';
 
 dotenvSafe.config();
 
@@ -12,27 +13,29 @@ client.once('ready', () => {
   console.info(`Logged as ${client.user!.tag}!`);
 });
 
-client.on('interactionCreate', async (interaction) => {
+const cmds = new Collection();
+
+for (const command of commandList) {
+  cmds.set(command.data.name, command);
+}
+
+client.on('interactionCreate', async (interaction: Interaction) => {
   if (!interaction.isCommand()) {
     return;
   }
+  const command = cmds.get(interaction.commandName) as {
+    execute(inter: Interaction): Promise<void>;
+  };
 
-  if (interaction.commandName === 'ping') {
-    interaction.reply({
-      content: 'ping..',
-      ephemeral: false,
-    });
-  } else if (interaction.commandName === 'beep') {
-    interaction.reply({
-      content: 'beep..',
+  if (!command) return;
+
+  try {
+    await command.execute(interaction);
+  } catch (error) {
+    console.error(error);
+    await interaction.reply({
+      content: 'There was an error while executing this command!',
       ephemeral: true,
-    });
-  } else if (interaction.commandName === 'echo') {
-    const words = interaction.options.getString('words')!;
-    const wordsArr = words.split(' ');
-
-    interaction.reply({
-      content: `${wordsArr[wordsArr.length - 1]}..`,
     });
   }
 });

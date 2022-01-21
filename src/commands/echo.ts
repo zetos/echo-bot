@@ -13,7 +13,7 @@ const echo = {
       return;
     }
 
-    const words = interaction.options.getString('words')!;
+    const words = interaction.options.getString('phrase')!;
     const wordsArr = words.split(' ');
 
     await interaction.reply({
