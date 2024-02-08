@@ -1,12 +1,18 @@
 import dotenvSafe from 'dotenv-safe';
-import { Client, Collection, Intents, Interaction } from 'discord.js';
+import {
+  Client,
+  Collection,
+  GatewayIntentBits,
+  Interaction,
+  Partials,
+} from 'discord.js';
 import { commandList } from './commands';
 
 dotenvSafe.config();
 
 const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
-  partials: ['MESSAGE', 'REACTION'],
+  intents: [[GatewayIntentBits.Guilds]],
+  partials: [Partials.Message, Partials.Reaction],
 });
 
 client.once('ready', () => {

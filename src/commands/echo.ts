@@ -1,14 +1,14 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { Interaction } from 'discord.js';
+import { ChatInputCommandInteraction } from 'discord.js';
 
 const echo = {
   data: new SlashCommandBuilder()
     .setName('echo')
     .setDescription('Repeats the last word.')
     .addStringOption((option) =>
-      option.setName('phrase').setDescription('A phrase..').setRequired(true)
+      option.setName('phrase').setDescription('A phrase..').setRequired(true),
     ),
-  async execute(interaction: Interaction) {
+  async execute(interaction: ChatInputCommandInteraction) {
     if (!interaction.isCommand()) {
       return;
     }

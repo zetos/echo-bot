@@ -11,6 +11,7 @@ A list of avaliable different commands that have a similar result..
 
 - `/echo <phase>`: Answers with the last word..
 - `/ping`: Answers with ping..
+
 ## Setup
 
 Create a `.env` file with your discord token and Guild ID:

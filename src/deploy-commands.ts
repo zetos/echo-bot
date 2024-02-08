@@ -16,11 +16,11 @@ rest
   .put(
     Routes.applicationGuildCommands(
       process.env.CLIENT_ID!,
-      process.env.GUILD_ID!
+      process.env.GUILD_ID!,
     ),
     {
       body: commands,
-    }
+    },
   )
   .then(() => console.info('Successfully registered application commands.'))
   .catch(console.error);
