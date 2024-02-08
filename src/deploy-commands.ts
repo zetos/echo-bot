@@ -1,12 +1,11 @@
 import { commandList } from './commands';
-import { REST } from '@discordjs/rest';
-import { Routes } from 'discord-api-types/v9';
+import { REST, Routes } from 'discord.js';
 import dotenvSafe from 'dotenv-safe';
 dotenvSafe.config();
 
 const commands = commandList.map((cmd) => cmd.data.toJSON());
 
-const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN!);
+const rest = new REST().setToken(process.env.DISCORD_TOKEN!);
 
 rest
   .put(
