@@ -19,11 +19,7 @@ client.once('ready', () => {
   console.info(`Logged as ${client.user!.tag}!`);
 });
 
-const cmds = new Collection();
-
-for (const command of commandList) {
-  cmds.set(command.data.name, command);
-}
+const cmds = new Collection(commandList.map((cmd) => [cmd.data.name, cmd]));
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   if (!interaction.isCommand()) {
