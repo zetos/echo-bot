@@ -7,7 +7,9 @@
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn src/index.ts",
     "build": "tsc --build tsconfig.json",
-    "deployCmds": "ts-node src/deploy-commands.ts"
+    "deployCmds": "ts-node src/deploy-commands.ts",
+    "lint": "eslint .",
+    "format": "prettier --check ."
   },
   "keywords": [
     "discord",
@@ -16,22 +18,26 @@
   ],
   "author": "Zetos Lima",
   "license": "MIT",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "dependencies": {
-    "discord.js": "^14.14.1",
-    "dotenv-safe": "^9.0.0"
+    "discord.js": "^14.27.0",
+    "dotenv-safe": "^9.1.0"
   },
   "devDependencies": {
-    "@types/dotenv-safe": "^8.1.5",
-    "@types/node": "^20.11.16",
-    "@types/ws": "^8.5.10",
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "@types/dotenv-safe": "^9.1.0",
+    "@types/node": "^24.13.6",
+    "@types/ws": "^8.18.1",
     "@typescript-eslint/eslint-plugin": "^8.70.0",
     "@typescript-eslint/parser": "^8.70.0",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.1.3",
-    "prettier": "^3.2.5",
+    "eslint": "^10.11.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "prettier": "^3.9.8",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.3.3"
+    "typescript": "npm:@typescript/typescript6@^6.0.2"
   }
 }

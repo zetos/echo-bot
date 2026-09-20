@@ -5,9 +5,6 @@ const ping = {
     .setName('ping')
     .setDescription('Replies with ping..'),
   async execute(interaction: ChatInputCommandInteraction) {
-    if (!interaction.isCommand()) {
-      return;
-    }
     await interaction.reply('ping..');
   },
 };

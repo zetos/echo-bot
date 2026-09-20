@@ -1,9 +1,8 @@
-
 ![echo](./media/echo.jpg)
 
 ---
 
-**Echo** is a simple bot to test the interaction of the [discord.js v13](https://discord.js.org/#/) with the [Discord API](https://discord.com/developers/docs/intro), that likes to have the last word.
+**Echo** is a simple bot to test the interaction of [discord.js](https://discord.js.org/) with the [Discord API](https://discord.com/developers/docs/intro), that likes to have the last word.
 
 ## Commands
 
@@ -14,18 +13,20 @@ A list of avaliable different commands that have a similar result..
 
 ## Setup
 
-Create a `.env` file with your discord token and Guild ID:
+Create a `.env` file with your Discord token, application ID, and guild ID:
 
 ```
 DISCORD_TOKEN=<YOUR_TOKEN>
+CLIENT_ID=<YOUR_APPLICATION_ID>
 GUILD_ID=<YOUR_GUILD_ID>
 ```
 
-Then run: 
+Then run:
 
 ```sh
-npm i
-npm run build
-npm start
+pnpm install
+pnpm build
+pnpm start
 ```
-> For development use: `npm run dev`.
+
+> For development use: `pnpm dev`.

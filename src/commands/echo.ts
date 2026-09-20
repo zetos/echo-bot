@@ -8,11 +8,7 @@ const echo = {
       option.setName('phrase').setDescription('A phrase..').setRequired(true),
     ),
   async execute(interaction: ChatInputCommandInteraction) {
-    if (!interaction.isCommand()) {
-      return;
-    }
-
-    const words = interaction.options.getString('phrase')!;
+    const words = interaction.options.getString('phrase', true);
     const wordsArr = words.split(' ');
 
     await interaction.reply({

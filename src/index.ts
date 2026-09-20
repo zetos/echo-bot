@@ -3,7 +3,8 @@ import {
   Client,
   Collection,
   GatewayIntentBits,
-  Interaction,
+  type InteractionReplyOptions,
+  MessageFlags,
   Partials,
 } from 'discord.js';
 import { commandList } from './commands';
@@ -11,23 +12,21 @@ import { commandList } from './commands';
 dotenvSafe.config();
 
 const client = new Client({
-  intents: [[GatewayIntentBits.Guilds]],
+  intents: [GatewayIntentBits.Guilds],
   partials: [Partials.Message, Partials.Reaction],
 });
 
-client.once('ready', () => {
-  console.info(`Logged as ${client.user!.tag}!`);
+client.once('clientReady', (readyClient) => {
+  console.info(`Logged as ${readyClient.user.tag}!`);
 });
 
 const cmds = new Collection(commandList.map((cmd) => [cmd.data.name, cmd]));
 
-client.on('interactionCreate', async (interaction: Interaction) => {
-  if (!interaction.isCommand()) {
+client.on('interactionCreate', async (interaction) => {
+  if (!interaction.isChatInputCommand()) {
     return;
   }
-  const command = cmds.get(interaction.commandName) as {
-    execute(inter: Interaction): Promise<void>;
-  };
+  const command = cmds.get(interaction.commandName);
 
   if (!command) return;
 
@@ -35,10 +34,16 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     await command.execute(interaction);
   } catch (error) {
     console.error(error);
-    await interaction.reply({
+    const errorReply = {
       content: 'There was an error while executing this command!',
-      ephemeral: true,
-    });
+      flags: MessageFlags.Ephemeral,
+    } satisfies InteractionReplyOptions;
+
+    if (interaction.replied || interaction.deferred) {
+      await interaction.followUp(errorReply);
+    } else {
+      await interaction.reply(errorReply);
+    }
   }
 });
 
