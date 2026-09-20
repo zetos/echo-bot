@@ -5,10 +5,10 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "dev": "ts-node-dev --respawn src/index.ts",
+    "dev": "tsx watch src/index.ts",
     "build": "tsc --build tsconfig.json",
-    "deployCmds": "ts-node src/deploy-commands.ts",
-    "lint": "eslint .",
+    "deployCmds": "tsx src/deploy-commands.ts",
+    "lint": "oxlint",
     "format": "prettier --check ."
   },
   "keywords": [
@@ -26,18 +26,13 @@
     "dotenv-safe": "^9.1.0"
   },
   "devDependencies": {
-    "@typescript/native": "npm:typescript@^7.0.2",
     "@types/dotenv-safe": "^9.1.0",
     "@types/node": "^24.13.6",
     "@types/ws": "^8.18.1",
-    "@typescript-eslint/eslint-plugin": "^8.70.0",
-    "@typescript-eslint/parser": "^8.70.0",
-    "eslint": "^10.11.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.6",
+    "oxlint": "^1.83.0",
+    "oxlint-tsgolint": "^7.0.2002",
     "prettier": "^3.9.8",
-    "ts-node": "^10.9.2",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "npm:@typescript/typescript6@^6.0.2"
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
   }
 }

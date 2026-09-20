@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "env": {
+    "node": true
+  },
+  "plugins": ["typescript"],
+  "ignorePatterns": ["dist"],
+  "options": {
+    "typeAware": true
+  },
+  "rules": {
+    "no-shadow": "error",
+    "typescript/no-non-null-assertion": "off"
+  }
+}
